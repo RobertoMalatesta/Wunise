@@ -1,0 +1,39 @@
+V1.0.0
+初始版本
+
+V1.1.0
+cgi:
+无
+Web Server:
+增加了Web服务器支持
+
+V1.1.1
+cgi:
+无
+Web Server:
+修复响应头bug，增强稳定性
+
+V1.1.2
+cgi:
+无
+Web Server:
+修复响应头bug，增加HEAD方法
+
+V1.1.3
+cgi:
+无
+Web Server:
+修复部分bug，增加OPTIONS方法
+
+V1.1.4
+cgi:
+无
+Web Server:
+明确只支持HEAD GET OPTIONS POST方法，添加其他方法的405页面。PS：(现阶段不支持POST方法)；
+修复BUG
+
+V1.1.5
+cgi:
+无
+Web Server:
+通过伪动态方法添加get的post方式。暂不支持post方法。
