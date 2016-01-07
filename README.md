@@ -8,10 +8,10 @@ C++也能写动态网页啦！！！
 make
 
 make install
-<br>
 
-lwsfc 是一个简单的web server 支持配置文件 使用方法:
+<p>lwsfc 是一个简单的web server 支持配置文件 使用方法:
 
 cd lwsfc
 
-./lwsfc
+./
+</p>
