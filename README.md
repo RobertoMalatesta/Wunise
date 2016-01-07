@@ -9,7 +9,8 @@ make
 
 make install
 
-\n
+  
+  
 
 lwsfc 是一个简单的web server 支持配置文件 使用方法:
 
