@@ -143,6 +143,13 @@ url[i] = '\0';
         }  
     }  
 
+/*options 的一个单例*/
+if( (strcasecmp(url, "*") == 0) && (strcasecmp(method, "OPTIONS") == 0)){
+	send(client,"HTTP/1.1 200 OK\r\n",strlen("HTTP/1.1 200 OK\r\n") ,0);
+	send_options_res_by_urlstar(client);
+	close(client);
+	return;
+}
 
 if (strcasecmp(method, "GET") && strcasecmp(method, "HEAD"))
   {
@@ -152,13 +159,7 @@ if (strcasecmp(method, "GET") && strcasecmp(method, "HEAD"))
       return;
   }
 
-/*options 的一个单例*/
-if( (strcasecmp(url, "*") == 0) && (strcasecmp(method, "OPTIONS") == 0)){
-	send(client,"HTTP/1.1 200 OK\r\n",strlen("HTTP/1.1 200 OK\r\n") ,0);
-	send_options_res_by_urlstar(client);
-	close(client);
-	return;
-}
+
 /*判断url和method*/
 FILE *fp = fopen(to_local_path(url,conf),"r");
 if(fp && (strcasecmp(method, "GET") == 0)){
