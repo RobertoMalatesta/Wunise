@@ -37,3 +37,6 @@ cgi:
 无
 Web Server:
 通过伪动态方法添加get的post方式。暂不支持post方法。
+
+V1.1.6
+修复bug
