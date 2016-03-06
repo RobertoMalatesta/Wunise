@@ -1,17 +1,8 @@
 # cgicpp
-C++也能写动态网页啦！！！
+更改项目为web server
 
-未完待续！
+cgicpp仅仅作为web server下的模块
 
-./configure
 
-make
 
-make install
-<br><br>
-<p>lwsfc 是一个简单的web server 支持配置文件 使用方法:<br>
 
-cd lwsfc <br>
-
-./lwsfc <br>
-</p>
