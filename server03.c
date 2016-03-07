@@ -5,8 +5,8 @@
 #include <sys/socket.h>
 #include "fastcgi.h"
 
-#define PORT 8080            // 服务器监听端口
-
+#define PORT 8081            // 服务器监听端口
+void catGIF(void *sock, char *filename);
 void requestHandling(void *sock);   // 浏览器请求处理
 void sendData(void *sock, char *filename); // 向浏览器发送请求文件的内容
 void catHTML(void *sock, char *filename); // 读取HTML文件内容
@@ -132,6 +132,8 @@ void sendData(void *sock, char *filename){
         catHTML(sock, filename);
     }else if(0 == strcmp(ext, "jpg")){ // 如果是jpg图片
         catJPEG(sock, filename);
+    }else if(0 == strcmp(ext, "gif")){ // 如果是jpg图片
+        catGIF(sock, filename);
     }else{
         sendError(sock);
         close(clnt_sock);
@@ -189,6 +191,40 @@ void catJPEG(void *sock, char *filename){
 
     char status[] = "HTTP/1.0 200 OK\r\n";
     char header[] = "Server: A Simple Web Server\r\nContent-Type: image/jpeg\r\n\r\n";
+
+    write(clnt_sock, status, strlen(status));     // 发送响应报文状态行
+    write(clnt_sock, header, strlen(header));     // 发送响应报文消息头
+
+    // 图片文件以二进制格式打开
+    fp = fopen(filename, "rb");
+    if(NULL == fp){
+        sendError(sock);
+        close(clnt_sock);
+        errorHandling("opne file failed!");
+        return ;
+    }
+
+    // 在套接字上打开一个文件句柄
+    fw = fdopen(clnt_sock, "w");
+    fread(buf, 1, sizeof(buf), fp);
+    while (!feof(fp)){
+        fwrite(buf, 1, sizeof(buf), fw);
+        fread(buf, 1, sizeof(buf), fp);
+    }
+
+    fclose(fw);
+    fclose(fp);
+    close(clnt_sock);
+}
+
+void catGIF(void *sock, char *filename){
+    int clnt_sock = *((int *) sock);
+    char buf[1024];
+    FILE *fp;
+    FILE *fw;
+
+    char status[] = "HTTP/1.0 200 OK\r\n";
+    char header[] = "Server: A Simple Web Server\r\nContent-Type: image/gif\r\n\r\n";
 
     write(clnt_sock, status, strlen(status));     // 发送响应报文状态行
     write(clnt_sock, header, strlen(header));     // 发送响应报文消息头
@@ -355,5 +391,4 @@ void catPHP(void *sockc, char *filename, char *query){
     free(message);
     close(clnt_sock);
 }
-
 
